@@ -59,7 +59,7 @@ vector<BNJJOS003::point> getPoints(string file, int k){
 
             }
 
-            p.setClusterNumber(p.index%k);
+            p.setClusterNumber(((p.index-1)%k)+1);
 
             tempPoints.push_back(p);
             p.print();
@@ -91,9 +91,11 @@ int main(int argc, const char * argv[]) {
 
 
 
+    int iterations = 0;
 
+    while (iterations < 11){
 
-    while (newPoints != oldPoints){
+        iterations++;
 
         for (int i = 0; i < clusters.size(); ++i) {
             clusters[i].emptyPoints();
@@ -119,6 +121,26 @@ int main(int argc, const char * argv[]) {
             points[i].setClusterNumber(newCluster+1);
             clusters[newCluster].addPoint(points[i]);
 
+        }
+
+        for (int i = 0; i < clusters.size(); ++i) {
+
+            /*
+            for (int j = 0; j < clusters[i].clusterPoints.size(); ++j) {
+
+                tempX += clusters[i].clusterPoints[j].x;
+                tempY += clusters[i].clusterPoints[j].y;
+
+            }
+            */
+
+            clusters[i].calculateNewCentroid();
+        }
+
+        cout << "Iteration " << iterations << '\n' << endl;
+
+        for (int i = 0; i < clusters.size(); ++i) {
+            clusters[i].print();
         }
 
     }

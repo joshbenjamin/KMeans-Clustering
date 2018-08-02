@@ -1,4 +1,6 @@
 #include "cluster.h"
+#include <iostream>
+#include <string>
 
 namespace BNJJOS003{
 
@@ -42,6 +44,18 @@ namespace BNJJOS003{
 
     void cluster::emptyPoints(){
         clusterPoints.clear();
+    }
+
+    std::string pointNames(){
+        std::string pointsOutput = "";
+        for (int i = 0; i < clusterPoints.size(); ++i) {
+            pointsOutput = pointsOutput + std::to_string(clusterPoints[i].index) + ", ";
+        }
+        pointsOutput.substr(0, pointsOutput.length() - 2);
+    }
+
+    void cluster::print() {
+        std::cout << "Cluster " << index << pointNames() << '\n' << "Centroid: (" << centroidX << ", " << centroidY << ")" << std::endl;
     }
 
 };

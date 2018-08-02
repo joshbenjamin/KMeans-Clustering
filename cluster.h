@@ -24,6 +24,8 @@ namespace BNJJOS003{
         void calculateNewCentroid();
         void changeCentroid(double, double);
         void emptyPoints();
+
+        void print();
     };
 
 }

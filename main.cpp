@@ -11,7 +11,7 @@
 using namespace std;
 
 /*struct Cluster {
-    int index;
+    int number;
     vector<BNJJOS003::point> clusterPoints;
     vector<double, double> centroid;
 };*/
@@ -81,15 +81,13 @@ int main(int argc, const char * argv[]) {
 
     vector<BNJJOS003::point> points = getPoints(input, kElements);
 
-    vector <BNJJOS003::cluster> clusters (kElements);
+    vector <BNJJOS003::cluster> clusters;
 
     for (int i = 1; i < points.size()+1; ++i) {
         if(i % kElements == 1){
-            clusters.push_back(BNJJOS003::cluster(int((i/kElements)+1), points[i-1].x, points[i].y));
+            clusters.push_back(BNJJOS003::cluster((i/kElements+1), points[i-1].x, points[i-1].y));
         }
     }
-
-
 
     int iterations = 0;
 
@@ -101,20 +99,19 @@ int main(int argc, const char * argv[]) {
             clusters[i].emptyPoints();
         }
 
+
+
         for (int i = 0; i < points.size(); ++i) {
 
-            double currentDist = distance(points[i].x, clusters[points[i].clusterNumber-1].centroidX, points[i].y, clusters[points[i].clusterNumber-1].centroidY);
+            int newCluster = 0;
+            double lowestDistance = distance(points[i].x, clusters[0].centroidX, points[i].y, clusters[0].centroidY);
 
-            int newCluster = -1;
+            for (int j = 1; j < kElements; ++j) {
 
-            for (int j = 0; j < kElements; ++j) {
-
-                double tempDist = distance(points[i].x, clusters[j].centroidX, points[j].y, clusters[j].centroidY);
-                if (tempDist < currentDist){
-                    currentDist = tempDist;
+                double tempDist = distance(points[i].x, clusters[j].centroidX, points[i].y, clusters[j].centroidY);
+                if (tempDist < lowestDistance){
+                    lowestDistance = tempDist;
                     newCluster = j;
-                    //points[i].setClusterNumber(j+1);
-                    //clusters[j].addPoint(points[i]);
                 }
             }
 
@@ -123,19 +120,15 @@ int main(int argc, const char * argv[]) {
 
         }
 
+
+
         for (int i = 0; i < clusters.size(); ++i) {
 
-            /*
-            for (int j = 0; j < clusters[i].clusterPoints.size(); ++j) {
-
-                tempX += clusters[i].clusterPoints[j].x;
-                tempY += clusters[i].clusterPoints[j].y;
-
-            }
-            */
-
             clusters[i].calculateNewCentroid();
+
         }
+
+
 
         cout << "Iteration " << iterations << '\n' << endl;
 

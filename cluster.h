@@ -12,11 +12,12 @@ namespace BNJJOS003{
 
     class cluster{
     public:
-        int index;
+        int number;
         double centroidX;
         double centroidY;
         std::vector <BNJJOS003::point> clusterPoints;
 
+        cluster();
         cluster(int, double, double);
         ~cluster();
 

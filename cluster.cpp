@@ -4,18 +4,22 @@
 
 namespace BNJJOS003{
 
-    int index;
+    int number;
     double centroidX;
     double centroidY;
     std::vector <BNJJOS003::point> clusterPoints;
 
+    cluster::cluster() {
+
+    }
+
     cluster::cluster(int ind, double paramX, double paramY){
-        index = ind;
+        number = ind;
         changeCentroid(paramX, paramY);
     }
 
     cluster::~cluster(){
-        index = 0;
+        number = 0;
         centroidX = 0;
         centroidY = 0;
         clusterPoints.clear();
@@ -34,6 +38,9 @@ namespace BNJJOS003{
             tempY += clusterPoint.y;
         }
 
+        tempX = tempX/clusterPoints.size();
+        tempY = tempY/clusterPoints.size();
+
         changeCentroid(tempX, tempY);
     }
 
@@ -46,16 +53,31 @@ namespace BNJJOS003{
         clusterPoints.clear();
     }
 
+    /*
     std::string pointNames(){
         std::string pointsOutput = "";
         for (int i = 0; i < clusterPoints.size(); ++i) {
             pointsOutput = pointsOutput + std::to_string(clusterPoints[i].index) + ", ";
         }
         pointsOutput.substr(0, pointsOutput.length() - 2);
+
+        return pointsOutput;
     }
+    */
 
     void cluster::print() {
-        std::cout << "Cluster " << index << pointNames() << '\n' << "Centroid: (" << centroidX << ", " << centroidY << ")" << std::endl;
+        std::cout << "Cluster " << number << ": ";
+
+        if (clusterPoints.size() > 0) {
+            for (int i = 0; i < clusterPoints.size() - 1; ++i) {
+                std::cout << clusterPoints[i].index << ", ";
+            }
+            std::cout << clusterPoints[clusterPoints.size() - 1].index << std::endl;
+        }
+        else {
+            std::cout << std::endl;
+        }
+        std::cout << "Centroid: (" << centroidX << ", " << centroidY << ")" << '\n' << std::endl;
     }
 
 };

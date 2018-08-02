@@ -91,9 +91,15 @@ int main(int argc, const char * argv[]) {
 
     int iterations = 0;
 
-    while (iterations < 11){
+    std::vector<double> oldCentroidPoints;
+    oldCentroidPoints.push_back(420);
+    std::vector<double> newCentroidPoints;
+
+    while (oldCentroidPoints != newCentroidPoints){
 
         iterations++;
+        oldCentroidPoints = newCentroidPoints;
+        newCentroidPoints.clear();
 
         for (int i = 0; i < clusters.size(); ++i) {
             clusters[i].emptyPoints();
@@ -125,6 +131,8 @@ int main(int argc, const char * argv[]) {
         for (int i = 0; i < clusters.size(); ++i) {
 
             clusters[i].calculateNewCentroid();
+            newCentroidPoints.push_back(clusters[i].centroidX);
+            newCentroidPoints.push_back(clusters[i].centroidY);
 
         }
 

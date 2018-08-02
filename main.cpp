@@ -77,9 +77,10 @@ vector<BNJJOS003::point> getPoints(string file, int k){
 int main(int argc, const char * argv[]) {
 
     int kElements = atoi(argv[1]);
-    string input = argv[2];
+    string inputFileName = argv[2];
+    string outputFileName = argv[3];
 
-    vector<BNJJOS003::point> points = getPoints(input, kElements);
+    vector<BNJJOS003::point> points = getPoints(inputFileName, kElements);
 
     vector <BNJJOS003::cluster> clusters;
 
@@ -94,6 +95,8 @@ int main(int argc, const char * argv[]) {
     std::vector<double> oldCentroidPoints;
     oldCentroidPoints.push_back(420);
     std::vector<double> newCentroidPoints;
+
+    ofstream outputFile(outputFileName);
 
     while (oldCentroidPoints != newCentroidPoints){
 
@@ -136,15 +139,15 @@ int main(int argc, const char * argv[]) {
 
         }
 
-
-
-        cout << "Iteration " << iterations << '\n' << endl;
+        outputFile << "Iteration " << iterations << '\n' << endl;
 
         for (int i = 0; i < clusters.size(); ++i) {
-            clusters[i].print();
+            clusters[i].writeToFile(outputFile);
         }
 
     }
+
+    outputFile.close();
 
     return 0;
 }

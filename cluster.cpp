@@ -65,19 +65,20 @@ namespace BNJJOS003{
     }
     */
 
-    void cluster::print() {
-        std::cout << "Cluster " << number << ": ";
+    void cluster::writeToFile(std::ofstream & output) {
+
+        output << "Cluster " << number << ": ";
 
         if (clusterPoints.size() > 0) {
             for (int i = 0; i < clusterPoints.size() - 1; ++i) {
-                std::cout << clusterPoints[i].index << ", ";
+                output << clusterPoints[i].index << ", ";
             }
-            std::cout << clusterPoints[clusterPoints.size() - 1].index << std::endl;
+            output << clusterPoints[clusterPoints.size() - 1].index << std::endl;
         }
         else {
-            std::cout << std::endl;
+            output << std::endl;
         }
-        std::cout << "Centroid: (" << centroidX << ", " << centroidY << ")" << '\n' << std::endl;
+        output << "Centroid: (" << centroidX << ", " << centroidY << ")" << '\n' << std::endl;
     }
 
 };

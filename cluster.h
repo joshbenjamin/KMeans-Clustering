@@ -7,6 +7,8 @@
 
 #include "point.h"
 #include <vector>
+#include <string>
+#include <fstream>
 
 namespace BNJJOS003{
 
@@ -26,7 +28,7 @@ namespace BNJJOS003{
         void changeCentroid(double, double);
         void emptyPoints();
 
-        void print();
+        void writeToFile(std::ofstream &);
     };
 
 }

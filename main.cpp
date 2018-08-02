@@ -81,7 +81,7 @@ int main(int argc, const char * argv[]) {
 
     vector<BNJJOS003::point> points = getPoints(input, kElements);
 
-    vector <BNJJOS003::cluster> clusters;
+    vector <BNJJOS003::cluster> clusters (kElements);
 
     for (int i = 1; i < points.size()+1; ++i) {
         if(i % kElements == 1){
@@ -89,18 +89,35 @@ int main(int argc, const char * argv[]) {
         }
     }
 
+
+
+
+
     while (newPoints != oldPoints){
 
+        for (int i = 0; i < clusters.size(); ++i) {
+            clusters[i].emptyPoints();
+        }
+
         for (int i = 0; i < points.size(); ++i) {
-            //double dist = 10;
-            int centIndex = 0;
+
+            double currentDist = distance(points[i].x, clusters[points[i].clusterNumber-1].centroidX, points[i].y, clusters[points[i].clusterNumber-1].centroidY);
+
+            int newCluster = -1;
 
             for (int j = 0; j < kElements; ++j) {
-                double tempDist = distance(points[i].x, clusters[j].x, points[j].y, clusters[j].y);
-                if (tempDist < dist){
 
+                double tempDist = distance(points[i].x, clusters[j].centroidX, points[j].y, clusters[j].centroidY);
+                if (tempDist < currentDist){
+                    currentDist = tempDist;
+                    newCluster = j;
+                    //points[i].setClusterNumber(j+1);
+                    //clusters[j].addPoint(points[i]);
                 }
             }
+
+            points[i].setClusterNumber(newCluster+1);
+            clusters[newCluster].addPoint(points[i]);
 
         }
 

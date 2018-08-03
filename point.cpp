@@ -19,6 +19,8 @@ namespace BNJJOS003 {
         clusterNumber = 0;
     }
 
+    // Initialising methods
+
     void point::setX(int xVal) {
         x = xVal;
     }
@@ -31,10 +33,14 @@ namespace BNJJOS003 {
         index = indVal;
     }
 
+
+
+    // Sets this current point's 'ownership' to one of the clusters
     void point::setClusterNumber(int clus) {
         clusterNumber = clus;
     }
 
+    // This was just used for tracing
     void point::print() {
         std::cout << this->index << " " << this->x << " " << this->y << std::endl;
     }

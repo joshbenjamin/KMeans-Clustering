@@ -13,6 +13,7 @@ namespace BNJJOS003{
 
     }
 
+    // Creates the cluster with the supplied parameters for the centroid (As per the handout, Examples 1, 4 and 7)
     cluster::cluster(int ind, double paramX, double paramY){
         number = ind;
         changeCentroid(paramX, paramY);
@@ -25,10 +26,12 @@ namespace BNJJOS003{
         clusterPoints.clear();
     }
 
+    // Adds a point to this cluster if it is deemed the closest centroid to that point
     void cluster::addPoint(BNJJOS003::point p){
         clusterPoints.push_back(p);
     }
 
+    // Takes the mean of the X and Y values from the points associated with this cluster
     void cluster::calculateNewCentroid() {
         double tempX = 0;
         double tempY = 0;
@@ -44,31 +47,25 @@ namespace BNJJOS003{
         changeCentroid(tempX, tempY);
     }
 
+    // We set the centroid values with this method
     void cluster::changeCentroid(double x, double y){
         centroidX = x;
         centroidY = y;
     }
 
+    // This is called at the end of each iteration as it doesn't matter where the points are,
+    // their distance to each cluster centroid will still be calculated
     void cluster::emptyPoints(){
         clusterPoints.clear();
     }
 
-    /*
-    std::string pointNames(){
-        std::string pointsOutput = "";
-        for (int i = 0; i < clusterPoints.size(); ++i) {
-            pointsOutput = pointsOutput + std::to_string(clusterPoints[i].index) + ", ";
-        }
-        pointsOutput.substr(0, pointsOutput.length() - 2);
-
-        return pointsOutput;
-    }
-    */
+    // Used to write the values of each cluster to the output fstream that is passed through as a paramter
 
     void cluster::writeToFile(std::ofstream & output) {
 
         output << "Cluster " << number << ": ";
 
+        // Use this for loop to get the output of the points' index numbers to write to the file
         if (clusterPoints.size() > 0) {
             for (int i = 0; i < clusterPoints.size() - 1; ++i) {
                 output << clusterPoints[i].index << ", ";

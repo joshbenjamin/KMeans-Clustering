@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 
+#include "math.h"
 #include "point.h"
 #include "cluster.h"
 
